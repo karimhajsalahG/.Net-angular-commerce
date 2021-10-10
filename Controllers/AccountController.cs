@@ -3,11 +3,14 @@ using AngularToApiw.ModelViews;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace AngularToApiw.Controllers
 {
@@ -56,7 +59,17 @@ namespace AngularToApiw.Controllers
                 var result = await _manager.CreateAsync(user,model.Password);
                 if (result.Succeeded)
                 {
-                    return StatusCode(StatusCodes.Status200OK);
+
+                    //http://localhost:5000/Account/Registrationconfirm?ID&Token=4511785
+                    // create token
+
+                    var token = await _manager.GenerateEmailConfirmationTokenAsync(user);
+                    var confirmeLink = Url.Action("Registrationconfirm", "Account", new
+                    {
+                        ID = user.Id,
+                        Token = HttpUtility.UrlEncode(token)
+                    }, Request.Scheme);
+                    return Ok(confirmeLink);
                 }
                 else
                 {
@@ -84,6 +97,27 @@ namespace AngularToApiw.Controllers
                 return true;
             }
             return false;
+        }
+
+        [HttpGet]
+        [Route("RegistrationConfirm")]
+        public async Task<IActionResult> RegistrationConfirm(string ID, string Token)
+        {
+            if (string.IsNullOrEmpty(ID) || string.IsNullOrEmpty(Token))
+                return NotFound();
+            var user = await _manager.FindByIdAsync(ID);
+            if (user == null)
+                return NotFound();
+
+            var result = await _manager.ConfirmEmailAsync(user, HttpUtility.UrlDecode(Token));
+            if (result.Succeeded)
+            {
+                return Ok("Registration succes");
+            }
+            else
+            {
+                return Ok("RegistratiSSSon succes");
+            }
         }
     }
 }

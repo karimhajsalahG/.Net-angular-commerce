@@ -1,6 +1,7 @@
 using AngularToApiw.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +28,8 @@ namespace AngularToApiw
         {
             services.AddControllers();
             services.AddDbContext<ApplicationDB>(option => option.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
-            services.AddIdentity<ApplicationUser, ApplicationRole>(option=> {
+            services.AddIdentity<ApplicationUser, ApplicationRole>(option =>
+            {
 
                 //conditon passss
                 option.Password.RequireDigit = true;
@@ -36,7 +38,9 @@ namespace AngularToApiw
                 option.Password.RequiredUniqueChars = 1;
                 option.Password.RequireUppercase = true;
                 option.Password.RequireNonAlphanumeric = true;
-            }).AddEntityFrameworkStores<ApplicationDB>();
+            }).AddEntityFrameworkStores<ApplicationDB>()
+            .AddDefaultTokenProviders();
+
             services.AddRazorPages();
         }
 
