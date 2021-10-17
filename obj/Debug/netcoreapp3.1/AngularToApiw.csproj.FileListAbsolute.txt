@@ -55,3 +55,5 @@ C:\Users\karim\.NetProject\AngularToApiw\bin\Debug\netcoreapp3.1\runtimes\win-x8
 C:\Users\karim\.NetProject\AngularToApiw\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\karim\.NetProject\AngularToApiw\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\karim\.NetProject\AngularToApiw\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\karim\.NetProject\AngularToApiw\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\karim\.NetProject\AngularToApiw\bin\Debug\netcoreapp3.1\SendGrid.dll

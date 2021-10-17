@@ -1,4 +1,5 @@
-﻿using AngularToApiw.Models;
+﻿using AngularToAPI.Services;
+using AngularToApiw.Models;
 using AngularToApiw.ModelViews;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -69,7 +70,15 @@ namespace AngularToApiw.Controllers
                         ID = user.Id,
                         Token = HttpUtility.UrlEncode(token)
                     }, Request.Scheme);
-                    return Ok(confirmeLink);
+                    var txt = "Please confirm your  Registration at out sute";
+                    var link = "<a href=\"" + confirmeLink + "\">Registration confirm</a>";
+                    var title = "Registration Confirm";
+                    if (await SendGridAPI.Execute(user.Email, user.UserName, txt, link, title))
+                    {
+                        return Ok("Registration cooomplete");
+                    }
+
+                 
                 }
                 else
                 {
